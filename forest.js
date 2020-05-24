@@ -15,6 +15,7 @@ function Forest() {
     this.show = function() {
         for (let i = 0; i < this.trees.length; i++) {
             this.trees[i].grow();
+            this.trees[i].show();
         }
         for (let i = 0; i < this.seeds.length; i++) {
             this.seeds[i].show();

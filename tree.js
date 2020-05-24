@@ -11,7 +11,7 @@ function Tree(x, y, height, depth) {
         tree = []
         let rootBegin = createVector(this.x, this.y);
         let rootEnd = createVector(this.x, this.y - this.height);
-        let root = new Branch (this, rootBegin, rootEnd);
+        let root = new Branch (rootBegin, rootEnd);
         tree.push([root]);
 
         for (let i = 0; i < this.depth; i++) {
@@ -56,7 +56,10 @@ function Tree(x, y, height, depth) {
         for (let i = 0; i < tree.length; i++) {
             const branches = tree[i];
             for (let j = 0; j < branches.length; j++) {
-                branches[j].grow();
+                branches[j].update();
+                if (i < growth) {
+                    branches[j].grow();
+                }   
             }
         }
     }
