@@ -6,10 +6,11 @@ function setup() {
 
     tree1 = new Tree(width / 2, height - 5, 200, forest);
     forest.addTree(tree1);
+    frameRate(60);
 }
 
 function draw() {
-    background(51);
+    background(0);
     forest.update();
     forest.show();
 }

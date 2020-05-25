@@ -1,22 +1,32 @@
+/**
+ * Represents a phyical tree.
+ * @param {Number} x      The x-coordinate of the tree's root.
+ * @param {Number} y      The y-coordinate of the tree's root.
+ * @param {Number} height The height of the tree's trunk, before branching.
+ * @param {Forest} forest The forest in which this tree exists.
+ */
 function Tree(x, y, height, forest) {
     this.x = x;
     this.y = y;
     this.height = height;
     this.forest = forest;
-    this.depth = 4 + floor(height / 40);
-    
-    // 2D array of branches; each row contains all branches of a given depth
+    // The recursion depth for creating new branches.
+    this.depth = 5 + floor(height / 50);
+    // 2D array of branches; each row contains all branches of a given depth.
     let tree;
     
+    /**
+     * Generates the tree by filling the `tree` array with Branches.
+     */
     this.buildTree = function() {
         tree = []
-        let rootBegin = createVector(this.x, this.y);
-        let rootEnd = createVector(this.x, this.y - this.height);
-        let root = new Branch (rootBegin, rootEnd);
+        const rootBegin = createVector(this.x, this.y);
+        const rootEnd = createVector(this.x, this.y - this.height);
+        const root = new Branch (rootBegin, rootEnd);
         tree.push([root]);
 
         for (let i = 0; i < this.depth; i++) {
-            let branches = tree[i];
+            const branches = tree[i];
             tree.push([]);
             for (let j = 0; j < branches.length; j++) {
                 const children = branches[j].branch();
@@ -27,9 +37,13 @@ function Tree(x, y, height, forest) {
     }
     this.buildTree();
 
+    /**
+     * Returns an array of new Seeds located at the tree's outer leaves.
+     * @returns {Array[Seeds]} An array of Seeds.
+     */
     this.spawnSeeds = function() {
-        let spawnPoints = tree[tree.length - 1];
-        let seeds = [];
+        const spawnPoints = tree[tree.length - 1];
+        const seeds = [];
         
         for (let i = 0; i < spawnPoints.length; i++) {
             rand = Math.random();
@@ -40,7 +54,17 @@ function Tree(x, y, height, forest) {
         }
         return seeds;
     }
+
+    /**
+     * Kills the tree and removes it from the forest.
+     */
+    this.killTree = function() {
+        this.forest.removeTree(this);
+    }
     
+    /**
+     * Renders all branches in the tree.
+     */
     this.show = function() {
         for (let i = 0; i < tree.length; i++) {
             const branches = tree[i];
@@ -51,27 +75,27 @@ function Tree(x, y, height, forest) {
     }
 
     let growth = 0;
-    this.grow = function() {
-        if (growth < tree.length) {
-            growth += 0.1;
-        }
-        for (let i = 0; i < tree.length; i++) {
-            const branches = tree[i];
-            for (let j = 0; j < branches.length; j++) {
-                branches[j].update();
-                if (i < growth) {
-                    branches[j].grow();
+    /**
+     * Updates the state of the tree over time.
+     */
+    this.update = function() {
+        growth += 0.1;
+
+        if (growth <= tree.length) { // still growing
+            for (let i = 0; i < tree.length; i++) {
+                const branches = tree[i];
+                for (let j = 0; j < branches.length; j++) {
+                    if (i < growth) {
+                        branches[j].grow();
+                    }
+                    branches[j].update();
                 }
             }
         }
-    }
 
-    let timer = 0;
-    this.update = function() {
-        this.grow();
-        timer += 1;
-        if (timer == 3000) {
-            this.forest.removeTree(this);
+        // Deletes the tree when it becomes old.
+        if (growth > 120) {
+            this.killTree();
         }
     }
 
