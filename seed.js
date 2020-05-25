@@ -11,6 +11,8 @@ function Seed(x, y) {
      * Renders the seed.
      */
     this.show = function() {
+        strokeWeight(5);
+        stroke(50);
         point(this.x, this.y);
     }
 

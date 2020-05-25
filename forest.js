@@ -58,7 +58,7 @@ function Forest() {
      */
     this.sproutSeeds = function() {
         const randIdx = floor(Math.random() * (this.seeds.length - 1));
-        if (Math.random() < 0.05) { // seed grows into tree
+        if (Math.random() < 0.08) { // seed grows into tree
             this.sproutSeed(this.seeds[randIdx].x);
         }
         this.seeds.splice(randIdx, 1);
@@ -111,8 +111,11 @@ function Forest() {
         }
 
         // Limits maximum number of trees.
-        if (this.trees.length > 20) {
-            this.trees[0].killTree();
+        for (i = 0; i < this.trees.length; i++) {
+            const reverseIdx = this.trees.length - 1 - i;
+            const lifeReduction = ((reverseIdx / 15) ** 4) / 20;
+
+            this.trees[i].liveliness -= lifeReduction;
         }
     }
 }
