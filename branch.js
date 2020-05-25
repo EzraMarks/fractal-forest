@@ -7,8 +7,11 @@ function Branch(begin, end) {
     this.end.y = this.begin.y;
 
     this.branch = function() {
-        const angle = PI / 5;
-        const len = 0.65;
+        let angle = PI / 5;
+        let len = 0.65;
+        angle = angle * 0.5 + angle * Math.random();
+        len = len * 0.5 + angle * Math.random();
+
         
         // create right branch
         let rightBranchVec = branchVec.copy().rotate(angle);

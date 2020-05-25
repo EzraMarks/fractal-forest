@@ -1,8 +1,9 @@
-function Tree(x, y, height, depth) {
-    this.height = height;
+function Tree(x, y, height, forest) {
     this.x = x;
     this.y = y;
-    this.depth = depth;
+    this.height = height;
+    this.forest = forest;
+    this.depth = 4 + floor(height / 40);
     
     // 2D array of branches; each row contains all branches of a given depth
     let tree;
@@ -24,6 +25,7 @@ function Tree(x, y, height, depth) {
             }
         }
     }
+    this.buildTree();
 
     this.spawnSeeds = function() {
         let spawnPoints = tree[tree.length - 1];
@@ -59,8 +61,18 @@ function Tree(x, y, height, depth) {
                 branches[j].update();
                 if (i < growth) {
                     branches[j].grow();
-                }   
+                }
             }
         }
     }
+
+    let timer = 0;
+    this.update = function() {
+        this.grow();
+        timer += 1;
+        if (timer == 3000) {
+            this.forest.removeTree(this);
+        }
+    }
+
 }
