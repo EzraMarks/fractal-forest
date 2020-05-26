@@ -4,7 +4,7 @@ function setup() { //TODO re=run setup when page size changes
     createCanvas(window.innerWidth, window.innerHeight);
     forest = new Forest();
 
-    tree1 = new Tree(width / 2, height - 5, 300, forest);
+    tree1 = new Tree(width / 2, height - 5, 250, forest);
     forest.addTree(tree1);
     frameRate(60);
 }
