@@ -46,7 +46,7 @@ function Forest() {
      */
     this.sproutSeed = function(x) {
         if (x > 0 && x < width) {
-            const treeHeight = Math.random() * 200;
+            const treeHeight = Math.random() * 300;
             const newTree = new Tree(x, height - 5, treeHeight, this);
             this.addTree(newTree);
         }

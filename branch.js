@@ -21,8 +21,8 @@ function Branch(begin, end, depth, tree) {
      * @returns {Array[Branch]} Array containing the left and right Branches.
      */
     this.branch = function() {
-        let angle = PI / 5;
-        let len = 0.65;
+        let angle = PI / 6;
+        let len = 0.7;
         angle = (0.6 * angle) + (0.8 * Math.random() * angle);
         len = (0.75 * len) + (0.5 * Math.random() * len);
 
