@@ -49,8 +49,9 @@ function Tree(x, y, height, forest) {
         
         for (let i = 0; i < spawnPoints.length; i++) {
             rand = Math.random();
-            if (rand < 0.1) {
-                let seed = new Seed(spawnPoints[i].end.x, spawnPoints[i].end.y);
+            if (rand < 0.005) {
+                let seed = new Seed(spawnPoints[i].end.x, spawnPoints[i].end.y,
+                                    1, this.forest);
                 seeds.push(seed);
             }
         }
@@ -70,15 +71,15 @@ function Tree(x, y, height, forest) {
     }
 
     let growth = 0;
+    let seedTimer = 0;
     /**
      * Updates the state of the tree over time.
      */
     this.update = function() {
+        // Grows the branches over time.
         if (growth < 1) {
             growth += 0.02 - growth / 70;
         }
-
-        // Grows the branches over time.
         const branchDepth = growth * (tree.length - 1);
         if (tree[tree.length - 1][0].growth < 1) { // still growing
             for (let i = 0; i < tree.length; i++) {
@@ -90,6 +91,15 @@ function Tree(x, y, height, forest) {
                     branches[j].update();
                 }
             }
+        }
+
+        // Drops seeds with a frequency inversely proportional to the number of
+        // trees in the forest.
+        seedTimer += 1;
+        seedDropTime = this.forest.trees.length * 35;
+        if (seedTimer > seedDropTime) {
+            seedTimer = 0;
+            this.forest.addSeeds(this.spawnSeeds());
         }
 
         // Deletes the tree when it runs out of life.
