@@ -11,7 +11,7 @@ function Tree(x, y, height, forest) {
     this.height = height;
     this.forest = forest;
     // The recursion depth for creating new branches.
-    this.depth = 3 + floor(height / 75);
+    this.depth = 3 + floor(height / 70);
     // The percentage of life the tree has left.
     this.liveliness = 1;
     // 2D array of branches; each row contains all branches of a given depth.
