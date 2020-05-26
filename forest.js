@@ -46,7 +46,8 @@ function Forest() {
      */
     this.sproutSeed = function(x) {
         if (x > 0 && x < width) {
-            const treeHeight = Math.random() * 200;
+            const distribution = 0.5 + ((Math.random() - 0.5) * 1.6) ** 3;
+            const treeHeight = distribution * 400;
             const newTree = new Tree(x, height - 5, treeHeight, this);
             this.addTree(newTree);
         }
@@ -58,7 +59,7 @@ function Forest() {
      */
     this.sproutSeeds = function() {
         const randIdx = floor(Math.random() * (this.seeds.length - 1));
-        if (Math.random() < 0.05) { // seed grows into tree
+        if (Math.random() < 0.08) { // seed grows into tree
             this.sproutSeed(this.seeds[randIdx].x);
         }
         this.seeds.splice(randIdx, 1);
@@ -88,7 +89,7 @@ function Forest() {
         if (this.day > 365) {
             this.day = 0
         }
-        this.day += 1;
+        this.day += 2;
         
         // October 15: spawns the seeds.
         if (this.day == 288) { 
@@ -111,8 +112,11 @@ function Forest() {
         }
 
         // Limits maximum number of trees.
-        if (this.trees.length > 20) {
-            this.trees[0].killTree();
+        for (i = 0; i < this.trees.length; i++) {
+            const reverseIdx = this.trees.length - 1 - i;
+            const lifeReduction = ((reverseIdx / 15) ** 4) / 20;
+
+            this.trees[i].liveliness -= lifeReduction;
         }
     }
 }
