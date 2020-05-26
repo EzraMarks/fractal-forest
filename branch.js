@@ -40,9 +40,8 @@ function Branch(begin, end, depth, tree) {
         return [rightBranch, leftBranch];
     }
     
-    
     let relativeDepth = this.depth / this.tree.depth;
-    let color = 255 * (1 - relativeDepth);
+    let branchColor = 255 * (1 - (relativeDepth * 0.8));
     let branchSize;
     let lineWeight;
 
@@ -50,9 +49,8 @@ function Branch(begin, end, depth, tree) {
      * Renders the branch.
      */
     this.show = function() {
-        color = 255 * (1 - (relativeDepth * 0.8)) * this.tree.liveliness;
+        stroke(branchColor * this.tree.liveliness);
         strokeWeight(lineWeight);
-        stroke(color);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }
 
