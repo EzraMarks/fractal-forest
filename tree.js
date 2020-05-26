@@ -11,7 +11,7 @@ function Tree(x, y, height, forest) {
     this.height = height;
     this.forest = forest;
     // The recursion depth for creating new branches.
-    this.depth = 5 + floor(height / 50);
+    this.depth = 4 + floor(height / 120);
     // The percentage of life the tree has left.
     this.liveliness = 1;
     // 2D array of branches; each row contains all branches of a given depth.
@@ -74,12 +74,17 @@ function Tree(x, y, height, forest) {
      * Updates the state of the tree over time.
      */
     this.update = function() {
-        growth += 0.1;
-        if (growth <= tree.length) { // still growing
+        if (growth < 1) {
+            growth += 0.02 - growth / 70;
+        }
+
+        // Grows the branches over time.
+        const branchDepth = growth * (tree.length - 1);
+        if (tree[tree.length - 1][0].growth < 1) { // still growing
             for (let i = 0; i < tree.length; i++) {
                 const branches = tree[i];
                 for (let j = 0; j < branches.length; j++) {
-                    if (i < growth) {
+                    if (i < branchDepth) {
                         branches[j].grow();
                     }
                     branches[j].update();

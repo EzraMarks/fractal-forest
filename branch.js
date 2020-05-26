@@ -40,28 +40,29 @@ function Branch(begin, end, depth, tree) {
         return [rightBranch, leftBranch];
     }
     
-    let branchSize = p5.Vector.sub(this.end, this.begin).mag();
+    
     let relativeDepth = this.depth / this.tree.depth;
     let color = 255 * (1 - relativeDepth);
-    let lineWeight = 0.5 + (branchSize / 40) + 2 * (1 - relativeDepth);
+    let branchSize;
+    let lineWeight;
 
     /**
      * Renders the branch.
      */
     this.show = function() {
-        color = 255 * (1 - relativeDepth) * this.tree.liveliness;
+        color = 255 * (1 - (relativeDepth * 0.8)) * this.tree.liveliness;
         strokeWeight(lineWeight);
         stroke(color);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }
 
-    let growth = 0;
+    this.growth = 0;
     /**
      * Grows the branch over time.
      */
     this.grow = function() {
-        if (growth < 1) {
-            growth += 0.02;
+        if (this.growth < 1) {
+            this.growth += 0.03 - this.growth / 35;
         }
     }
 
@@ -70,9 +71,9 @@ function Branch(begin, end, depth, tree) {
      */
     this.update = function() {
         branchSize = p5.Vector.sub(this.end, this.begin).mag();
-        lineWeight = 0.5 + (branchSize / 40) + 2 * (1 - relativeDepth);
+        lineWeight = 1 + (branchSize / 40) + 2 * (1 - relativeDepth);
 
-        this.end.x = this.begin.x + branchVec.x * growth;
-        this.end.y = this.begin.y + branchVec.y * growth;
+        this.end.x = this.begin.x + branchVec.x * this.growth;
+        this.end.y = this.begin.y + branchVec.y * this.growth;
     }
 }
