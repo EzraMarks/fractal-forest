@@ -88,7 +88,7 @@ function Forest() {
         if (this.day > 365) {
             this.day = 0
         }
-        this.day += 1;
+        this.day += 2;
         
         // October 15: spawns the seeds.
         if (this.day == 288) { 
@@ -113,7 +113,7 @@ function Forest() {
         // Limits maximum number of trees.
         for (i = 0; i < this.trees.length; i++) {
             const reverseIdx = this.trees.length - 1 - i;
-            const lifeReduction = ((reverseIdx / 15) ** 4) / 20;
+            const lifeReduction = ((reverseIdx / 10) ** 4) / 20;
 
             this.trees[i].liveliness -= lifeReduction;
         }

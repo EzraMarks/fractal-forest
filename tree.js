@@ -74,12 +74,17 @@ function Tree(x, y, height, forest) {
      * Updates the state of the tree over time.
      */
     this.update = function() {
-        growth += 0.1;
-        if (growth <= tree.length) { // still growing
+        if (growth < 1) {
+            growth += 0.02 - growth / 70;
+        }
+
+        // Grows the branches over time.
+        const branchDepth = growth * (tree.length - 1);
+        if (tree[tree.length - 1][0].growth < 1) { // still growing
             for (let i = 0; i < tree.length; i++) {
                 const branches = tree[i];
                 for (let j = 0; j < branches.length; j++) {
-                    if (i < growth) {
+                    if (i < branchDepth) {
                         branches[j].grow();
                     }
                     branches[j].update();
