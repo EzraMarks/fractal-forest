@@ -2,13 +2,11 @@
  * Represents a seed in the forest.
  * @param {Number} x               The x-coordinate to spawn the new seed.
  * @param {Number} y               The y-coordinate to spawn the new seed.
- * @param {Number} germinationRate The chance of the seed sprouting.
  * @param {Forest} forest          The forest in which this seed exists.
  */
-function Seed(x, y, germinationRate, forest) {
+function Seed(x, y, forest) {
     this.x = x;
     this.y = y;
-    this.germinationRate = germinationRate;
     this.forest = forest;
 
     /**
@@ -17,7 +15,7 @@ function Seed(x, y, germinationRate, forest) {
     this.sproutTree = function() {
         if (this.x > 0 && this.x < width) {
             const treeHeight = Math.random() * 300;
-            const newTree = new Tree(x, height, treeHeight, this.forest);
+            const newTree = new Tree(x, treeHeight, this.forest);
             this.forest.addTree(newTree);
         }
     }
@@ -35,12 +33,10 @@ function Seed(x, y, germinationRate, forest) {
      * Updates the seed over time.
      */
     this.update = function() {
-        if (this.y < height) { // falling
+        if (this.y < height) { // Seed is falling.
             this.y += 4;
-        } else { // seed hits the ground
-            if (this.germinationRate > Math.random()) {
-                this.sproutTree();
-            }
+        } else { // Seed hits the ground.
+            this.sproutTree();
             this.forest.seeds.delete(this);
         }
     }

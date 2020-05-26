@@ -39,6 +39,16 @@ function Forest() {
     }
 
     /**
+     * Updates the positions of the trees, ensuring each tree's root starts at
+     * the bottom of the window.
+     */
+    this.updateTreePositions = function() {
+        for (let i = 0; i < this.trees.length; i++) {
+            this.trees[i].updatePosition();
+        }
+    }
+
+    /**
      * Renders and updates all children elements in the forest.
      */
     this.show = function() {

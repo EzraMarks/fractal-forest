@@ -1,17 +1,15 @@
 /**
  * Represents a phyical tree.
  * @param {Number} x      The x-coordinate of the tree's root.
- * @param {Number} y      The y-coordinate of the tree's root.
- * @param {Number} height The height of the tree's trunk, before branching.
+ * @param {Number} trunkHeight The height of the tree's trunk, before branching.
  * @param {Forest} forest The forest in which this tree exists.
  */
-function Tree(x, y, height, forest) {
+function Tree(x, trunkHeight, forest) {
     this.x = x;
-    this.y = y;
-    this.height = height;
+    this.trunkHeight = trunkHeight;
     this.forest = forest;
     // The recursion depth for creating new branches.
-    this.depth = 3 + floor(height / 70);
+    this.depth = 3 + floor(trunkHeight / 70);
     // The percentage of life the tree has left.
     this.liveliness = 1;
     // 2D array of branches; each row contains all branches of a given depth.
@@ -22,8 +20,8 @@ function Tree(x, y, height, forest) {
      */
     this.buildTree = function() {
         tree = []
-        const rootBegin = createVector(this.x, this.y);
-        const rootEnd = createVector(this.x, this.y - this.height);
+        const rootBegin = createVector(this.x, height);
+        const rootEnd = createVector(this.x, height - this.trunkHeight);
         const root = new Branch (rootBegin, rootEnd, 0, this);
         tree.push([root]);
 
@@ -51,11 +49,25 @@ function Tree(x, y, height, forest) {
             rand = Math.random();
             if (rand < 0.005) {
                 let seed = new Seed(spawnPoints[i].end.x, spawnPoints[i].end.y,
-                                    1, this.forest);
+                                    this.forest);
                 seeds.push(seed);
             }
         }
         return seeds;
+    }
+
+    /**
+     * Updates the position of the tree, ensuring the root starts at the bottom
+     * of the window.
+     */
+    this.updatePosition = function() {
+        tree[0][0].begin.y = height;
+        for (let i = 0; i < tree.length; i++) {
+            const branches = tree[i];
+            for (let j = 0; j < branches.length; j++) {
+                branches[j].update();
+            }
+        }
     }
     
     /**

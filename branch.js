@@ -49,8 +49,8 @@ function Branch(begin, end, depth, tree) {
      * Renders the branch.
      */
     this.show = function() {
-        stroke(branchColor * this.tree.liveliness);
         strokeWeight(lineWeight);
+        stroke(branchColor * this.tree.liveliness);
         line(this.begin.x, this.begin.y, this.end.x, this.end.y);
     }
 
@@ -68,10 +68,10 @@ function Branch(begin, end, depth, tree) {
      * Updates the state of the branch.
      */
     this.update = function() {
-        branchSize = p5.Vector.sub(this.end, this.begin).mag();
-        lineWeight = 1 + (branchSize / 40) + 2 * (1 - relativeDepth);
-
         this.end.x = this.begin.x + branchVec.x * this.growth;
         this.end.y = this.begin.y + branchVec.y * this.growth;
+
+        branchSize = p5.Vector.sub(this.end, this.begin).mag();
+        lineWeight = 1 + (branchSize / 40) + 2 * (1 - relativeDepth);
     }
 }

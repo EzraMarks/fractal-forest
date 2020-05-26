@@ -1,0 +1,29 @@
+let forest;
+
+// Sets up the canvas and forest scene.
+function setup() {
+    createCanvas(window.innerWidth, window.innerHeight);
+    frameRate(60);
+    forest = new Forest();
+    tree = new Tree(width / 2, 220, forest);
+    forest.addTree(tree);
+}
+
+// p5 function that draws the scene on every frame.
+function draw() {
+    background(0);
+    forest.update();
+    forest.show();
+}
+
+// Adds a new seed to the forest on mouse click.
+function mousePressed() {
+    const seed = new Seed(mouseX, mouseY, forest);
+    forest.addSeeds([seed]);
+}
+
+// Resizes the canvas when the window is resized.
+function windowResized() {
+    resizeCanvas(window.innerWidth, window.innerHeight);
+    forest.updateTreePositions();
+}
