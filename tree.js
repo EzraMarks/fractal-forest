@@ -24,7 +24,7 @@ function Tree(x, y, height, forest) {
         tree = []
         const rootBegin = createVector(this.x, this.y);
         const rootEnd = createVector(this.x, this.y - this.height);
-        const root = new Branch (rootBegin, rootEnd);
+        const root = new Branch (rootBegin, rootEnd, 0, this);
         tree.push([root]);
 
         for (let i = 0; i < this.depth; i++) {
@@ -56,13 +56,6 @@ function Tree(x, y, height, forest) {
         }
         return seeds;
     }
-
-    /**
-     * Kills the tree and removes it from the forest.
-     */
-    this.killTree = function() {
-        this.forest.removeTree(this);
-    }
     
     /**
      * Renders all branches in the tree.
@@ -82,7 +75,6 @@ function Tree(x, y, height, forest) {
      */
     this.update = function() {
         growth += 0.1;
-
         if (growth <= tree.length) { // still growing
             for (let i = 0; i < tree.length; i++) {
                 const branches = tree[i];
@@ -95,9 +87,9 @@ function Tree(x, y, height, forest) {
             }
         }
 
-        // Deletes the tree when it becomes old.
-        if (growth > 120) {
-            this.killTree();
+        // Deletes the tree when it runs out of life.
+        if (this.liveliness <= 0) {
+            this.forest.removeTree(this);
         }
     }
 

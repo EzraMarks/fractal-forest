@@ -1,7 +1,7 @@
 let forest;
 
-function setup() {
-    createCanvas(1000, 1000);
+function setup() { //TODO re=run setup when page size changes
+    createCanvas(window.innerWidth, window.innerHeight);
     forest = new Forest();
 
     tree1 = new Tree(width / 2, height - 5, 300, forest);
