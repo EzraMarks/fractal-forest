@@ -1,1 +1,1 @@
-https://brm.io/matter-js/
+Creating a basic fractal tree was one of my earliest coding projects; its simple elegance helped inspire me to study Computer Science. The Covid downtime has given me a chance to revisit these beautiful, algorithmic patterns of nature, growing that basic recursive fractal tree into an object-oriented Fractal Forest. This project was built in JavaScript with the help of the p5.js graphics library, created by the wonderful community behind the open source Processing software.
