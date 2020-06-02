@@ -20,7 +20,7 @@ function draw() {
 var released = true;
 function mousePressed() {
 	if (released) {
-		const seed = new Seed(mouseX, mouseY, forest);
+		const seed = new Seed(mouseX, mouseY, forest, false);
         forest.addSeeds([seed]);
 	}
 	released = false;

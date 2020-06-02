@@ -49,7 +49,7 @@ function Tree(x, trunkHeight, forest) {
             rand = Math.random();
             if (rand < 0.005) {
                 let seed = new Seed(spawnPoints[i].end.x, spawnPoints[i].end.y,
-                                    this.forest);
+                                    this.forest, true);
                 seeds.push(seed);
             }
         }
@@ -83,7 +83,7 @@ function Tree(x, trunkHeight, forest) {
     }
 
     let growth = 0;
-    let seedTimer = 0;
+    let seedTimer = Infinity;
     /**
      * Updates the state of the tree over time.
      */
@@ -107,8 +107,10 @@ function Tree(x, trunkHeight, forest) {
 
         // Drops seeds with a frequency inversely proportional to the number of
         // trees in the forest.
-        seedTimer += 1;
-        seedDropTime = this.forest.trees.length * 35;
+        if (growth >= 1) {
+            seedTimer += 1;
+        }
+        seedDropTime = (this.forest.trees.length ** 0.8) * 30;
         if (seedTimer > seedDropTime) {
             seedTimer = 0;
             this.forest.addSeeds(this.spawnSeeds());

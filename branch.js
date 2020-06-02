@@ -21,19 +21,21 @@ function Branch(begin, end, depth, tree) {
      * @returns {Array[Branch]} Array containing the left and right Branches.
      */
     this.branch = function() {
-        let angle = PI / 6;
+        let angle = PI / 5.6;
         let len = 0.7;
-        angle = (0.6 * angle) + (0.8 * Math.random() * angle);
-        len = (0.75 * len) + (0.5 * Math.random() * len);
 
         // Creates right branch.
-        const rightBranchVec = branchVec.copy().rotate(angle);
-        rightBranchVec.mult(len);
+        randAngle = (0.75 * angle) + (0.5 * Math.random() * angle);
+        randLen = (0.8 * len) + (0.4 * Math.random() * len);
+        const rightBranchVec = branchVec.copy().rotate(randAngle);
+        rightBranchVec.mult(randLen);
         const rightEnd = p5.Vector.add(this.end, rightBranchVec);
         const rightBranch = new Branch(this.end, rightEnd, this.depth + 1, tree);
         // Creates left branch.
-        const leftBranchVec = branchVec.copy().rotate(-angle);
-        leftBranchVec.mult(len);
+        randAngle = (0.85 * randAngle) + (0.3 * Math.random() * randAngle);
+        randLen = (0.85 * randLen) + (0.3 * Math.random() * randLen);
+        const leftBranchVec = branchVec.copy().rotate(-randAngle);
+        leftBranchVec.mult(randLen);
         const leftEnd = p5.Vector.add(this.end, leftBranchVec);
         const leftBranch = new Branch(this.end, leftEnd, this.depth + 1, tree);
 
@@ -72,6 +74,6 @@ function Branch(begin, end, depth, tree) {
         this.end.y = this.begin.y + branchVec.y * this.growth;
 
         branchSize = p5.Vector.sub(this.end, this.begin).mag();
-        lineWeight = 1 + (branchSize / 40) + 2 * (1 - relativeDepth);
+        lineWeight = 1.5 + 0.5 * (branchSize ** 0.55) * ((1 - relativeDepth) ** 2);
     }
 }
