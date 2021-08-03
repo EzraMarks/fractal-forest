@@ -1,0 +1,22 @@
+{
+  "name": "fractal-forest",
+  "version": "1.0.0",
+  "description": "Creating a fractal tree was one of my earliest coding projects; its simple elegance helped inspire me to study Computer Science. Staying home in Vermont during the Covid lockdown has given me some time to revisit these beautiful, algorithmic patterns of nature, growing that basic recursive fractal tree into an object-oriented Fractal Forest. This project was built in JavaScript with the help of the p5.js graphics library, created by the community behind the open-source [Processing](https://processing.org/) software.",
+  "main": "branch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EzraMarks/fractal-forest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EzraMarks/fractal-forest/issues"
+  },
+  "homepage": "https://github.com/EzraMarks/fractal-forest#readme",
+  "dependencies": {
+    "p5": "^1.4.0"
+  }
+}
